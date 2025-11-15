@@ -560,37 +560,38 @@ function initAchievementsScroll() {
   function updateAchievementsScroll() {
     const containerRect = achievementsContainer.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    const triggerPoint = windowHeight / 2;
+    const windowWidth = window.innerWidth;
+
+    // Adjust trigger point based on screen size
+    const triggerPoint =
+      windowWidth <= 768 ? windowHeight * 0.4 : windowHeight / 2;
 
     const containerTop = containerRect.top;
     const containerBottom = containerRect.bottom;
 
-    // Only scroll horizontally when container is in the middle of viewport
+    // Only scroll horizontally when container is in viewport
     if (containerTop <= triggerPoint && containerBottom >= triggerPoint) {
       // Calculate scroll progress within the container
-      const scrollDistance = triggerPoint - containerTop;
+      const scrollDistance = Math.max(0, triggerPoint - containerTop);
       const containerHeight = containerRect.height;
       const scrollProgress = Math.max(
         0,
-        Math.min(1, scrollDistance / containerHeight)
+        Math.min(1, scrollDistance / (containerHeight - windowHeight))
       );
 
       // Calculate maximum horizontal scroll
       const trackWidth = achievementsTrack.scrollWidth;
-      const containerWidth = window.innerWidth;
-      const maxScroll = trackWidth - containerWidth;
+      const containerWidth = windowWidth;
+      const maxScroll = Math.max(0, trackWidth - containerWidth);
 
-      // Apply horizontal translation
-      const translateX = -(scrollProgress * maxScroll);
+      // Apply horizontal translation with easing
+      const easeProgress =
+        scrollProgress < 0.5
+          ? 2 * scrollProgress * scrollProgress
+          : 1 - Math.pow(-2 * scrollProgress + 2, 2) / 2;
+
+      const translateX = -(easeProgress * maxScroll);
       achievementsTrack.style.transform = `translateX(${translateX}px)`;
-
-      // Lock vertical scrolling when not at start or end
-      if (scrollProgress > 0.05 && scrollProgress < 0.95) {
-        // Prevent body scroll
-        const scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-        window.scrollTo(0, scrollTop);
-      }
     }
   }
 
@@ -606,8 +607,16 @@ function initAchievementsScroll() {
     }
   });
 
+  // Update on resize
+  window.addEventListener(
+    "resize",
+    debounce(() => {
+      updateAchievementsScroll();
+    }, 250)
+  );
+
   // Initial call
-  updateAchievementsScroll();
+  setTimeout(updateAchievementsScroll, 100);
 }
 
 // ==================== CERTIFICATE MODAL ====================

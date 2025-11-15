@@ -51,14 +51,9 @@ body.dark-mode {
   box-sizing: border-box;
 }
 
-/* Global overflow prevention */
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-  position: relative;
 }
 
 body {
@@ -69,9 +64,6 @@ body {
   line-height: 1.6;
   transition: all 0.5s ease;
   overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
-  position: relative;
 }
 
 img {
@@ -107,8 +99,6 @@ h6 {
   padding: var(--container-padding);
   position: relative;
   z-index: 1;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .glass-card {
@@ -232,14 +222,12 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  max-width: 100vw;
   padding: 1.5rem 0;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(15px);
   border-bottom: 1px solid var(--glass-border);
   z-index: 999;
   transition: var(--transition-smooth);
-  box-sizing: border-box;
 }
 
 header.scrolled {
@@ -803,10 +791,8 @@ body.dark-mode .timeline-dot {
   position: relative;
   height: 300vh;
   overflow: visible;
-  overflow-x: hidden;
   margin-top: 0;
   width: 100%;
-  max-width: 100vw;
 }
 
 .achievements-track-horizontal {
@@ -817,9 +803,7 @@ body.dark-mode .timeline-dot {
   gap: 2rem;
   padding: 2rem 0 2rem 100vw;
   will-change: transform;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: visible;
+  transition: transform 0.1s linear;
 }
 
 .achievement-card {
@@ -927,7 +911,6 @@ body.dark-mode .timeline-dot {
   top: 50%;
   transform: translateY(-50%) rotate(5deg);
   width: 480px;
-  max-width: calc(100vw - 2rem);
   height: 340px;
   background: white;
   border-radius: 16px;
@@ -938,7 +921,6 @@ body.dark-mode .timeline-dot {
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
-  box-sizing: border-box;
 }
 
 .achievement-card:hover .cert-preview-float {
@@ -1844,10 +1826,13 @@ body.dark-mode .footer {
 
   .achievements-scroll-container {
     height: 250vh;
+    overflow-x: hidden;
   }
 
   .achievements-track-horizontal {
     gap: 1.5rem;
+    padding: 2rem 0 2rem 100vw;
+    top: 40%;
   }
 
   .achievement-card {
@@ -2134,11 +2119,14 @@ body.dark-mode .footer {
   /* Achievements */
   .achievements-scroll-container {
     height: 200vh;
+    overflow-x: hidden;
+    margin-bottom: 2rem;
   }
 
   .achievements-track-horizontal {
     padding: 2rem 0 2rem 100vw;
     gap: 1.5rem;
+    top: 40%;
   }
 
   .achievement-card {
@@ -2483,67 +2471,5 @@ textarea:focus-visible {
     left: auto !important;
     top: auto !important;
     width: 100% !important;
-  }
-
-  /* Comprehensive overflow prevention for mobile */
-  html,
-  body {
-    max-width: 100vw;
-    overflow-x: hidden;
-    width: 100%;
-    position: relative;
-  }
-
-  /* Fix potential overflow issues */
-  .hero-grid,
-  .about-grid,
-  .skills-grid,
-  .awards-grid,
-  .services-grid,
-  .portfolio-list,
-  .contact-grid,
-  .container,
-  .section {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-  }
-
-  /* Fix achievements track on mobile */
-  .achievements-track-horizontal {
-    padding-left: 100vw;
-    width: auto;
-    min-width: fit-content;
-  }
-
-  .achievements-scroll-container {
-    overflow-x: hidden;
-  }
-
-  /* Ensure fixed elements don't cause overflow */
-  .fixed-social-icons,
-  .dark-mode-toggle,
-  .scroll-top {
-    max-width: none;
-  }
-
-  /* Fix cert preview float positioning on mobile */
-  .cert-preview-float {
-    max-width: calc(100vw - 2rem);
-    right: auto;
-    left: 1rem;
-  }
-
-  .achievement-card:hover .cert-preview-float {
-    right: auto;
-    left: 1rem;
-  }
-
-  /* Ensure all sections respect viewport */
-  section {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
   }
 }
