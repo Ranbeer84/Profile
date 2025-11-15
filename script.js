@@ -545,7 +545,7 @@ function initSkillsStack() {
 }
 
 // ==================== FIXED ACHIEVEMENTS HORIZONTAL SCROLL ====================
-// Ensures all cards reach the middle before allowing vertical scroll
+// Horizontal scroll for desktop/tablet, vertical for mobile
 
 function initAchievementsScroll() {
   const achievementsContainer = document.querySelector(
@@ -558,37 +558,32 @@ function initAchievementsScroll() {
   if (!achievementsContainer || !achievementsTrack) return;
 
   function updateAchievementsScroll() {
+    const windowWidth = window.innerWidth;
+
+    // Disable horizontal scroll on mobile (768px and below)
+    if (windowWidth <= 768) {
+      achievementsTrack.style.transform = "translateX(0)";
+      return;
+    }
+
     const containerRect = achievementsContainer.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
 
     // Adjust trigger point based on screen size
     const triggerPoint =
-      windowWidth <= 768 ? windowHeight / 2 : windowHeight / 2;
+      windowWidth <= 1024 ? windowHeight * 0.4 : windowHeight / 2;
 
     const containerTop = containerRect.top;
     const containerBottom = containerRect.bottom;
-
-    // Calculate when to start horizontal scroll
-    const isMobile = windowWidth <= 768;
-    const startScrollThreshold = isMobile
-      ? windowHeight * 0.5
-      : windowHeight * 0.3;
 
     // Only scroll horizontally when container is in viewport
     if (containerTop <= triggerPoint && containerBottom >= triggerPoint) {
       // Calculate scroll progress within the container
       const scrollDistance = Math.max(0, triggerPoint - containerTop);
       const containerHeight = containerRect.height;
-
-      // Adjust scroll range for mobile
-      const effectiveHeight = isMobile
-        ? containerHeight - windowHeight * 0.5
-        : containerHeight - windowHeight;
-
       const scrollProgress = Math.max(
         0,
-        Math.min(1, scrollDistance / effectiveHeight)
+        Math.min(1, scrollDistance / (containerHeight - windowHeight))
       );
 
       // Calculate maximum horizontal scroll
@@ -597,23 +592,10 @@ function initAchievementsScroll() {
       const maxScroll = Math.max(0, trackWidth - containerWidth);
 
       // Apply horizontal translation with easing
-      // On mobile, delay the start of horizontal scroll
-      let adjustedProgress = scrollProgress;
-
-      if (isMobile) {
-        // Create a delay zone (first 20% of scroll = no horizontal movement)
-        const delayZone = 0.2;
-        if (scrollProgress < delayZone) {
-          adjustedProgress = 0;
-        } else {
-          adjustedProgress = (scrollProgress - delayZone) / (1 - delayZone);
-        }
-      }
-
       const easeProgress =
-        adjustedProgress < 0.5
-          ? 2 * adjustedProgress * adjustedProgress
-          : 1 - Math.pow(-2 * adjustedProgress + 2, 2) / 2;
+        scrollProgress < 0.5
+          ? 2 * scrollProgress * scrollProgress
+          : 1 - Math.pow(-2 * scrollProgress + 2, 2) / 2;
 
       const translateX = -(easeProgress * maxScroll);
       achievementsTrack.style.transform = `translateX(${translateX}px)`;

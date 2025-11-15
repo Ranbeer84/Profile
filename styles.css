@@ -2116,24 +2116,30 @@ body.dark-mode .footer {
     border-radius: 8px;
   }
 
-  /* Achievements */
+  /* Achievements - Normal Vertical Scroll on Mobile */
   .achievements-scroll-container {
-    height: 250vh;
+    height: auto;
     overflow-x: hidden;
     margin-bottom: 2rem;
   }
 
   .achievements-track-horizontal {
-    padding: 2rem 0 2rem 100vw;
+    position: relative;
+    top: auto;
+    transform: none;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
+    padding: 0;
+    width: 100%;
   }
 
   .achievement-card {
-    min-width: 320px;
-    max-width: 320px;
-    height: 280px;
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    min-height: 280px;
     padding: 1.8rem;
   }
 
@@ -2157,6 +2163,18 @@ body.dark-mode .footer {
     display: none;
   }
 
+  .view-cert-badge {
+    position: relative;
+    bottom: auto;
+    transform: none;
+    margin-top: 1rem;
+    display: inline-block;
+  }
+
+  .achievement-card:hover .view-cert-badge {
+    transform: none;
+  }
+  
   .cert-modal-content {
     width: 95%;
     height: 85vh;
