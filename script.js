@@ -438,7 +438,12 @@ function initParallaxEffect() {
   const heroImage = document.querySelector(".hero-image img");
   if (!heroImage) return;
 
-  window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", () => {
+    // Skip parallax on mobile: it slides the photo over the social buttons
+    if (window.innerWidth <= 768) {
+      heroImage.style.transform = "";
+      return;
+    }
     const scrolled = window.pageYOffset;
     const rate = scrolled * 0.3;
     if (scrolled < window.innerHeight) {

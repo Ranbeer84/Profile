@@ -2492,3 +2492,202 @@ textarea:focus-visible {
     width: 100% !important;
   }
 }
+/* =====================================================================
+   MOBILE FIXES
+   ===================================================================== */
+
+/* Project link arrow: force text glyph (no emoji box on iOS/Android) */
+.link-arrow {
+  font-family: "Inter", "Segoe UI Symbol", sans-serif;
+  font-variant-emoji: text;
+  font-style: normal;
+}
+
+@media (max-width: 768px) {
+  /* 1. Header: fixed height, logo shrinks, dark toggle sits left of hamburger */
+  header,
+  header.scrolled {
+    height: 64px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  header .container {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .logo {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: clamp(11px, 3.9vw, 16px);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 44px; /* room reserved for the fixed dark-mode toggle */
+  }
+
+  .mobile-toggle {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dark-mode-toggle {
+    top: 12px;
+    right: 60px; /* 16px container padding + 40px hamburger + 4px gap */
+    width: 40px;
+    height: 40px;
+  }
+
+  /* 2. Social buttons: always above hero image, never covered */
+  .hero-image {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+  }
+
+  .mobile-social-icons {
+    position: relative;
+    z-index: 5;
+    margin-top: 1.5rem;
+  }
+
+  .hero-image img {
+    transform: none !important;
+  }
+
+  /* 3. Education timeline: clean vertical line on the left */
+  .timeline {
+    padding: 1rem 0 1rem 0;
+  }
+
+  .timeline-line {
+    display: block;
+    left: 14px;
+    transform: none;
+    width: 2px;
+  }
+
+  .timeline-item,
+  .timeline-item.reverse {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding-left: 44px;
+    text-align: left;
+  }
+
+  .timeline-content,
+  .timeline-item.reverse .timeline-content {
+    width: 100%;
+    padding: 1.1rem 1.25rem;
+    text-align: left;
+    grid-column: auto;
+  }
+
+  .timeline-title {
+    font-size: 1.15rem;
+  }
+
+  .timeline-dot,
+  .timeline-item.reverse .timeline-dot {
+    position: absolute;
+    left: 3px;
+    top: 1.4rem;
+    margin: 0;
+    width: 22px;
+    height: 22px;
+    border-width: 3px;
+    grid-column: auto;
+  }
+
+  .timeline-year,
+  .timeline-item.reverse .timeline-year {
+    width: auto;
+    grid-column: auto;
+    text-align: left;
+    padding: 0.35rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* 5. Footer: compact */
+  .footer {
+    padding: 1.75rem 0 1.25rem;
+    margin-top: 2rem;
+  }
+
+  footer .footer-container {
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-container .about,
+  .footer-container .info,
+  .footer-container .follow {
+    margin-bottom: 0;
+  }
+
+  .footer .group h2 {
+    margin-bottom: 0.35rem;
+  }
+
+  .footer-container .about h2 {
+    font-size: 1.5rem;
+  }
+
+  .footer .group p,
+  .footer .group a {
+    margin: 0.2rem 0;
+  }
+
+  .footer-container .info h3,
+  .footer-container .follow h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  /* links in a wrapping row instead of a tall column */
+  .footer-container .info ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .footer-container .info ul li {
+    margin: 0;
+  }
+
+  /* social icons in a horizontal row */
+  .footer-container .follow ul {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .footer-container .follow ul li {
+    margin: 0;
+  }
+
+  .footer .icon a {
+    margin: 0;
+  }
+
+  .footer .tooltip {
+    display: none;
+  }
+
+  .footer-copyright {
+    padding-top: 1rem;
+  }
+}
